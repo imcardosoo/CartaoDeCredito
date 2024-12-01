@@ -4,37 +4,22 @@ public class CartaoDeCredito {
     private String cpfTitular;
     private double limite;
     private double saldo;
+    private double taxaCashback;
 
-    public CartaoDeCredito(String numero, String nomeTitular, String cpfTitular, double limite, double saldo) {
+    public CartaoDeCredito(String numero, String nomeTitular) {
         this.numero = numero;
         this.nomeTitular = nomeTitular;
-        this.cpfTitular = cpfTitular;
+        this.limite = 1000.00;
+        this.saldo = 0.00;
+        this.taxaCashback = 0.05;
+    }
+
+    public CartaoDeCredito(String numero, String nomeTitular, double limite, double taxaCashback) {
+        this.numero = numero;
+        this.nomeTitular = nomeTitular;
         this.limite = limite;
-        this.saldo = saldo;
-    }
-
-        public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getNomeTitular() {
-        return nomeTitular;
-    }
-
-    public void setNomeTitular(String nomeTitular) {
-        this.nomeTitular = nomeTitular;
-    }
-
-    public String getCpfTitular() {
-        return cpfTitular;
-    }
-
-    public void setCpfTitular(String cpfTitular) {
-        this.cpfTitular = cpfTitular;
+        this.saldo = 0.00;
+        this.taxaCashback = taxaCashback;
     }
 
     public double getLimite() {
@@ -53,18 +38,30 @@ public class CartaoDeCredito {
         this.saldo = saldo;
     }
 
-    public String consultarSaldo() {
-        return String.format("Saldo disponível: R$ %.2f", getSaldo());
+    public String realizarCompra(double valor) {
+        if (valor <= 0) {
+            return "Valor inválido!";
+        }
+        if (valor > limite - saldo) {
+            return "Saldo insuficiente!";
+        }
+        saldo += valor;
+        return "Compra realizada de R$ " + valor + ". Saldo atual: R$ " + saldo;
     }
 
-    public String consultarLimite() {
-        return String.format("Limite total: R$ %.2f", getLimite());
-    }
-
-    public String realizarTransacao(double valor) {
-        if (valor <= 0) return "Valor inválido para transação.";
-        if (valor > (getLimite() - getSaldo())) return "Transação negada: limite insuficiente.";
-        setSaldo(getSaldo() + valor);
-        return String.format("Transação de R$ %.2f realizada com sucesso! Saldo atual: R$ %.2f", valor, getSaldo());
+    public String realizarCompra(double valor, boolean comCashback) {
+        if (valor <= 0) {
+            return "Valor inválido!";
+        }
+        if (valor > limite - saldo) {
+            return "Saldo insuficiente!";
+        }
+        saldo += valor;
+        if (comCashback) {
+            double cashback = valor * taxaCashback;
+            saldo += cashback;
+            return "Compra com cashback realizada de R$ " + valor + ". Cashback de R$ " + cashback + ". Saldo atual: R$ " + saldo;
+        }
+        return "Compra realizada de R$ " + valor + ". Saldo atual: R$ " + saldo;
     }
 }
