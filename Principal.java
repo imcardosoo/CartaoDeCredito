@@ -20,37 +20,37 @@ public class Principal {
         System.out.println("Informe o número do cartão:");
         String numero = scanner.nextLine();
 
-        System.out.println("Deseja criar o cartão com limite e cashback personalizados?");
-        System.out.println("1. Não (Limite padrão)");
-        System.out.println("2. Sim");
-        int opcao = scanner.nextInt();
+        CartaoDeCredito cartao = new CartaoDeCredito(numero, cliente);
 
-        CartaoDeCredito cartao;
+        System.out.println("Deseja realizar uma compra?");
+        System.out.println("1. Sim");
+        System.out.println("2. Não");
+        int opcaoCompra = scanner.nextInt();
 
-        if (opcao == 2) {
-            System.out.println("Informe o limite do cartão:");
-            double limite = scanner.nextDouble();
-            System.out.println("Informe a taxa de cashback (por exemplo, 0.05 para 5%):");
-            double cashback = scanner.nextDouble();
-            cartao = new CartaoDeCredito(numero, cliente, limite, cashback);
-        } else {
-            cartao = new CartaoDeCredito(numero, cliente);
+        if (opcaoCompra == 1) {
+            System.out.println("Informe o valor da compra:");
+            double valor = scanner.nextDouble();
+            scanner.nextLine();  // Limpar o buffer de entrada
+
+            System.out.println("Deseja aplicar cashback? (true/false):");
+            boolean comCashback = scanner.nextBoolean();
+            scanner.nextLine();  // Limpar o buffer de entrada
+
+            System.out.println("Informe a descrição da compra:");
+            String descricao = scanner.nextLine();
+
+            cartao.realizarCompra(valor, comCashback, descricao);
         }
 
-        System.out.println("Selecione a opção de compra:");
-        System.out.println("1. Compra básica");
-        System.out.println("2. Compra com cashback");
-        int compraOpcao = scanner.nextInt();
+        System.out.println("Deseja ver o histórico de transações?");
+        System.out.println("1. Sim");
+        System.out.println("2. Não");
+        int opcaoHistorico = scanner.nextInt();
 
-        System.out.println("Informe o valor da compra:");
-        double valor = scanner.nextDouble();
-
-        if (compraOpcao == 1) {
-            System.out.println(cartao.realizarCompra(valor));
-        } else if (compraOpcao == 2) {
-            System.out.println(cartao.realizarCompra(valor, true));
-        } else {
-            System.out.println("Opção inválida.");
+        if (opcaoHistorico == 1) {
+            cartao.exibirHistorico();
         }
+
+        scanner.close();
     }
 }
