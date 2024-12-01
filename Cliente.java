@@ -5,7 +5,7 @@ public class Cliente {
     private String email;
     private String telefone;
 
-    // Construtor
+
     public Cliente(String nome, String cpf, String cnpj, String email, String telefone) {
         this.nome = nome;
         this.cpf = cpf;
@@ -14,7 +14,7 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    // Métodos getters e setters
+
     public String getNome() {
         return nome;
     }
