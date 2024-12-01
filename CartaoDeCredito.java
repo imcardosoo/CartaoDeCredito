@@ -1,22 +1,21 @@
 public class CartaoDeCredito {
     private String numero;
-    private String nomeTitular;
-    private String cpfTitular;
     private double limite;
     private double saldo;
     private double taxaCashback;
+    private Cliente cliente;
 
-    public CartaoDeCredito(String numero, String nomeTitular) {
+    public CartaoDeCredito(String numero, Cliente cliente) {
         this.numero = numero;
-        this.nomeTitular = nomeTitular;
+        this.cliente = cliente;
         this.limite = 1000.00;
         this.saldo = 0.00;
         this.taxaCashback = 0.05;
     }
 
-    public CartaoDeCredito(String numero, String nomeTitular, double limite, double taxaCashback) {
+    public CartaoDeCredito(String numero, Cliente cliente, double limite, double taxaCashback) {
         this.numero = numero;
-        this.nomeTitular = nomeTitular;
+        this.cliente = cliente;
         this.limite = limite;
         this.saldo = 0.00;
         this.taxaCashback = taxaCashback;
