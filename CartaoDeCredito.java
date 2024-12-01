@@ -12,9 +12,9 @@ public class CartaoDeCredito {
     public CartaoDeCredito(String numero, Cliente cliente) {
         this.numero = numero;
         this.cliente = cliente;
-        this.limite = 1000.00;
+        this.limite = 1000.00;  // Limite padrão
         this.saldo = 0.00;
-        this.taxaCashback = 0.05;
+        this.taxaCashback = 0.0;  // Sem cashback por padrão
         this.historicoDeTransacoes = new ArrayList<>();
     }
 
@@ -27,22 +27,6 @@ public class CartaoDeCredito {
         this.historicoDeTransacoes = new ArrayList<>();
     }
 
-    public double getLimite() {
-        return limite;
-    }
-
-    public void setLimite(double limite) {
-        this.limite = limite;
-    }
-
-    public double getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
-
     public void realizarCompra(double valor, boolean comCashback, String descricao) {
         if (valor <= 0) {
             System.out.println("Valor inválido!");
@@ -53,7 +37,7 @@ public class CartaoDeCredito {
             return;
         }
         saldo += valor;
-        if (comCashback) {
+        if (comCashback && taxaCashback > 0) {
             double cashback = valor * taxaCashback;
             saldo += cashback;
             System.out.println("Compra com cashback realizada de R$ " + valor + ". Cashback de R$ " + cashback + ". Saldo atual: R$ " + saldo);
@@ -73,5 +57,22 @@ public class CartaoDeCredito {
         for (Transacao t : historicoDeTransacoes) {
             System.out.println("Data: " + t.getData() + ", Valor: R$ " + t.getValor() + ", Descrição: " + t.getDescricao());
         }
+    }
+
+    // Getters e Setters
+    public double getLimite() {
+        return limite;
+    }
+
+    public void setLimite(double limite) {
+        this.limite = limite;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
     }
 }
