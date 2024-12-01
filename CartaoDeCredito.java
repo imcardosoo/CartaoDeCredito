@@ -12,9 +12,9 @@ public class CartaoDeCredito {
     public CartaoDeCredito(String numero, Cliente cliente) {
         this.numero = numero;
         this.cliente = cliente;
-        this.limite = 1000.00;  // Limite padrão
+        this.limite = 1000.00;  
         this.saldo = 0.00;
-        this.taxaCashback = 0.0;  // Sem cashback por padrão
+        this.taxaCashback = 0.0;  
         this.historicoDeTransacoes = new ArrayList<>();
     }
 
