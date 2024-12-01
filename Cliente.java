@@ -5,7 +5,6 @@ public class Cliente {
     private String email;
     private String telefone;
 
-
     public Cliente(String nome, String cpf, String cnpj, String email, String telefone) {
         this.nome = nome;
         this.cpf = cpf;
@@ -14,7 +13,7 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-
+    
     public String getNome() {
         return nome;
     }
@@ -23,35 +22,5 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
+    
 }
