@@ -3,51 +3,27 @@ import java.util.Scanner;
 public class Principal {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Digite o número do cartão: ");
+        System.out.println("Informe o número do cartão:");
         String numero = scanner.nextLine();
-
-        System.out.print("Digite o nome do titular: ");
+        System.out.println("Informe o nome do titular:");
         String nomeTitular = scanner.nextLine();
 
-        System.out.print("Digite o CPF do titular: ");
-        String cpfTitular = scanner.nextLine();
+        CartaoDeCredito cartao = new CartaoDeCredito(numero, nomeTitular);
 
-        System.out.print("Digite o limite do cartão: ");
-        double limite = scanner.nextDouble();
+        System.out.println("Selecione a opção de compra:");
+        System.out.println("1. Compra básica");
+        System.out.println("2. Compra com cashback");
+        int opcao = scanner.nextInt();
 
-        CartaoDeCredito cartao = new CartaoDeCredito(numero, nomeTitular, cpfTitular, limite, 0.0);
+        System.out.println("Informe o valor da compra:");
+        double valor = scanner.nextDouble();
 
-        int opcao;
-        do {
-            System.out.println("\nMenu de Opções:");
-            System.out.println("1 - Realizar Transação");
-            System.out.println("2 - Consultar Limite");
-            System.out.println("3 - Consultar Saldo");
-            System.out.println("0 - Sair");
-            System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
-
-            switch (opcao) {
-                case 1:
-                    System.out.print("Digite o valor da transação: ");
-                    double valor = scanner.nextDouble();
-                    System.out.println(cartao.realizarTransacao(valor));
-                    break;
-                case 2:
-                    System.out.println(cartao.consultarLimite());
-                    break;
-                case 3:
-                    System.out.println(cartao.consultarSaldo());
-                    break;
-                case 0:
-                    System.out.println("Saindo...");
-                    break;
-                default:
-                    System.out.println("Opção inválida.");
-            }
-        } while (opcao != 0);
-
-        scanner.close();
+        if (opcao == 1) {
+            System.out.println(cartao.realizarCompra(valor));
+        } else if (opcao == 2) {
+            System.out.println(cartao.realizarCompra(valor, true));
+        } else {
+            System.out.println("Opção inválida.");
+        }
     }
 }
