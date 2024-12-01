@@ -5,61 +5,25 @@ public class CartaoDeCredito {
     private String numero;
     private double limite;
     private double saldo;
-    private double taxaCashback;
     private Cliente cliente;
-    private ArrayList<Transacao> historicoDeTransacoes;
+    private List<Transacao> historicoDeTransacoes;
 
     public CartaoDeCredito(String numero, Cliente cliente) {
         this.numero = numero;
+        this.limite = 1000.0;
+        this.saldo = 0.0;
         this.cliente = cliente;
-        this.limite = 1000.00;  
-        this.saldo = 0.00;
-        this.taxaCashback = 0.0;  
         this.historicoDeTransacoes = new ArrayList<>();
     }
 
-    public CartaoDeCredito(String numero, Cliente cliente, double limite, double taxaCashback) {
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
         this.numero = numero;
-        this.cliente = cliente;
-        this.limite = limite;
-        this.saldo = 0.00;
-        this.taxaCashback = taxaCashback;
-        this.historicoDeTransacoes = new ArrayList<>();
     }
 
-    public void realizarCompra(double valor, boolean comCashback, String descricao) {
-        if (valor <= 0) {
-            System.out.println("Valor inválido!");
-            return;
-        }
-        if (valor > limite - saldo) {
-            System.out.println("Saldo insuficiente!");
-            return;
-        }
-        saldo += valor;
-        if (comCashback && taxaCashback > 0) {
-            double cashback = valor * taxaCashback;
-            saldo += cashback;
-            System.out.println("Compra com cashback realizada de R$ " + valor + ". Cashback de R$ " + cashback + ". Saldo atual: R$ " + saldo);
-        } else {
-            System.out.println("Compra realizada de R$ " + valor + ". Saldo atual: R$ " + saldo);
-        }
-
-        Transacao transacao = new Transacao(new Date(), (float) valor, descricao);
-        historicoDeTransacoes.add(transacao);
-    }
-
-    public void exibirHistorico() {
-        if (historicoDeTransacoes.isEmpty()) {
-            System.out.println("Nenhuma transação realizada.");
-            return;
-        }
-        for (Transacao t : historicoDeTransacoes) {
-            System.out.println("Data: " + t.getData() + ", Valor: R$ " + t.getValor() + ", Descrição: " + t.getDescricao());
-        }
-    }
-
-    // Getters e Setters
     public double getLimite() {
         return limite;
     }
@@ -75,4 +39,41 @@ public class CartaoDeCredito {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<Transacao> getHistoricoDeTransacoes() {
+        return historicoDeTransacoes;
+    }
+
+    public String consultarSaldo() {
+        return String.format("Saldo disponível: R$ %.2f", saldo);
+    }
+
+    public String consultarLimite() {
+        return String.format("Limite total: R$ %.2f", limite);
+    }
+
+    public String realizarCompra(double valor) {
+        if (valor > (limite - saldo)) {
+            return "Transação negada: limite insuficiente.";
+        }
+        saldo += valor;
+        Transacao transacao = new Transacao(new Date(), valor, "Compra realizada");
+        historicoDeTransacoes.add(transacao);
+        return String.format("Compra de R$ %.2f realizada com sucesso!", valor);
+    }
+
+    public void exibirHistorico() {
+        for (Transacao transacao : historicoDeTransacoes) {
+            System.out.println(transacao);
+        }
+    }
 }
+
