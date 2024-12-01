@@ -1,56 +1,17 @@
-import java.util.Scanner;
-
 public class Principal {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Cliente cliente = new Cliente("João", "123.456.789-00", "12345678000199", "joao@email.com", "987654321");
 
-        System.out.println("Informe o nome do cliente:");
-        String nome = scanner.nextLine();
-        System.out.println("Informe o CPF do cliente:");
-        String cpf = scanner.nextLine();
-        System.out.println("Informe o CNPJ do cliente (caso tenha, senão deixe em branco):");
-        String cnpj = scanner.nextLine();
-        System.out.println("Informe o email do cliente:");
-        String email = scanner.nextLine();
-        System.out.println("Informe o telefone do cliente:");
-        String telefone = scanner.nextLine();
+        CartaoDeCredito cartaoBasico = new CartaoBasico("1234", cliente);
+        CartaoDeCredito cartaoPremium = new CartaoPremium("5678", cliente);
+        CartaoDeCredito cartaoEmpresarial = new CartaoEmpresarial("91011", cliente);
 
-        Cliente cliente = new Cliente(nome, cpf, cnpj, email, telefone);
+        cartaoBasico.realizarCompra(500, false, "Compra básica");
+        cartaoPremium.realizarCompra(1000, true, "Compra com cashback");
+        cartaoEmpresarial.realizarCompra(3000, false, "Compra empresarial");
 
-        System.out.println("Informe o número do cartão:");
-        String numero = scanner.nextLine();
-
-        CartaoDeCredito cartao = new CartaoDeCredito(numero, cliente);
-
-        System.out.println("Deseja realizar uma compra?");
-        System.out.println("1. Sim");
-        System.out.println("2. Não");
-        int opcaoCompra = scanner.nextInt();
-
-        if (opcaoCompra == 1) {
-            System.out.println("Informe o valor da compra:");
-            double valor = scanner.nextDouble();
-            scanner.nextLine();  // Limpar o buffer de entrada
-
-            System.out.println("Deseja aplicar cashback? (true/false):");
-            boolean comCashback = scanner.nextBoolean();
-            scanner.nextLine();  // Limpar o buffer de entrada
-
-            System.out.println("Informe a descrição da compra:");
-            String descricao = scanner.nextLine();
-
-            cartao.realizarCompra(valor, comCashback, descricao);
-        }
-
-        System.out.println("Deseja ver o histórico de transações?");
-        System.out.println("1. Sim");
-        System.out.println("2. Não");
-        int opcaoHistorico = scanner.nextInt();
-
-        if (opcaoHistorico == 1) {
-            cartao.exibirHistorico();
-        }
-
-        scanner.close();
+        cartaoBasico.exibirHistorico();
+        cartaoPremium.exibirHistorico();
+        cartaoEmpresarial.exibirHistorico();
     }
 }
